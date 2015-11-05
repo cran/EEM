@@ -5,7 +5,7 @@
 #' @param prcompResult output object from \code{\link[stats]{prcomp}} function
 #' @param xPC an integer indicating PC component on x-axis
 #' @param yPC an integer indicating PC component on y-axis
-#' @param pointsize (optional) size of points on graphs 
+#' @param cex (optional) size of points on graphs 
 #' @param label (optional) a character vector or expression specifying the text to be written.
 #' @param pos (optional, applicable when label is given) a position specifier for the text. If specified this overrides 
 #' any adj value given. Values of 1, 2, 3 and 4, respectively indicate positions below, 
@@ -23,8 +23,7 @@
 #' Only applicable if legendoutside = TRUE
 #' @param col point color
 #' @param pch point type
-#' @param title (optional) plot title
-#' @param ... additional arguments for \code{\link[graphics]{text}}
+#' @param ... additional arguments for \code{\link[graphics]{par}}
 #' 
 #' @return A figure is returned on the graphic device
 #' 
@@ -56,8 +55,7 @@
 #' 
 plotScore <-
 function(prcompResult, xPC = 1, yPC = 2, group = NULL,
-         pointsize = 1.5, label = NULL, pos = 4, col = NULL, pch = NULL,
-         title = NULL,
+         cex = 1.5, label = NULL, pos = 4, col = NULL, pch = NULL,
          legendlocation = "bottomright",
          legendoutside = FALSE,
          rightwhitespace = 0,
@@ -119,7 +117,6 @@ function(prcompResult, xPC = 1, yPC = 2, group = NULL,
     # prepare plotting information
     xLabel <- prcompname(prcompResult, xPC)
     yLabel <- prcompname(prcompResult, yPC)
-    if (is.null(title)) title <- paste("PC ", xPC, " vs PC ", yPC, sep = "")
     
     # set plotting area when there is legend outside
     if (is.g & isTRUE(legendoutside)) {
@@ -129,7 +126,7 @@ function(prcompResult, xPC = 1, yPC = 2, group = NULL,
     
     # plot
     plot(score[, xPC], score[, yPC], xlab = xLabel, ylab = yLabel,
-         main = title, cex = pointsize, col = col, pch = pch)
+         cex = cex, col = col, pch = pch, ...)
     
     abline(v = 0, h = 0, lty = 2, col = "grey39")
     
@@ -142,7 +139,7 @@ function(prcompResult, xPC = 1, yPC = 2, group = NULL,
              Please check your label variable.")
         }
         text(score[, xPC], score[, yPC], labels = label,
-             pos = pos, ...)
+             pos = pos)
     }
     
     # legend for is.g
@@ -160,15 +157,15 @@ function(prcompResult, xPC = 1, yPC = 2, group = NULL,
             if (!twogroup) {
                 legend("topright", inset = c(-0.3-legendinset, 0), 
                        legend = as.vector(group), pch = pch.palette,
-                       pt.cex = pointsize, col = col.palette, 
-                       xpd=TRUE)
+                       pt.cex = cex, col = col.palette, 
+                       xpd = TRUE)
             } else {
                 group <- c(group, NA, group2)
                 col.palette <- c(col.palette, NA, rep("black", numLevels2))
                 pch.palette <- c(rep(15, numLevels), NA, pch.palette)
                 legend("topright", inset = c(-0.3-legendinset, 0), 
                        legend = as.vector(group), pch = pch.palette,
-                       pt.cex = pointsize, col = col.palette, 
+                       pt.cex = cex, col = col.palette, 
                        xpd=TRUE)
             }
  
@@ -184,8 +181,9 @@ function(prcompResult, xPC = 1, yPC = 2, group = NULL,
             }
             
             legend(legendlocation, legend = as.vector(group), pch = pch.palette,
-                   pt.cex = pointsize, col = col.palette, 
+                   pt.cex = cex, col = col.palette, 
                    xpd = TRUE)
         }
     }
+    par(xpd = FALSE)
 }

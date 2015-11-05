@@ -1,12 +1,9 @@
-## ----setup, echo=FALSE---------------------------------------------------
+## ----setup, echo=FALSE, warning=FALSE------------------------------------
 library(knitr)
 library(EEM)
 opts_chunk$set(fig.width=6.5, fig.height=4)
 
 ## ----readEEM, eval=FALSE-------------------------------------------------
-#  # choose folder interactively
-#  data <- readEEM()
-#  
 #  # read raw data files from a folder
 #  data <- readEEM(folder)
 #  
@@ -26,6 +23,9 @@ drawEEM(applejuice, n = 1)
 
 # draw EEM of sample no.1 with different color
 drawEEM(applejuice, n = 1, color.palette = cm.colors) 
+
+# flip the axis
+drawEEM(applejuice, n = 1, flipaxis = TRUE) 
 
 ## ----delScattering-------------------------------------------------------
 # delete scattering regions and assign them as NA
@@ -93,7 +93,7 @@ plotScore(result, xPC = 1, yPC = 2,country, legendlocation = "topright")
 
 # plot score using scatterplot matrix with grouping
 plotScorem(result, ncomp = 5, country)
-plotScorem(result, ncomp = 5, cultivar, pointsize = 1)
+plotScorem(result, ncomp = 5, cultivar, cex = 1)
 
 ## ----pls, message=FALSE, warning=FALSE-----------------------------------
 # load gluten data

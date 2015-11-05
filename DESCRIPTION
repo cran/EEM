@@ -1,9 +1,9 @@
 Package: EEM
 Type: Package
-Title: Read and Analyze Fluorescence Excitation-Emission Matrix (EEM)
-        Data
-Version: 1.0.1
-Date: 2015-08-05
+Title: Read and Preprocess Fluorescence Excitation-Emission Matrix
+        (EEM) Data
+Version: 1.0.4
+Date: 2015-10-14
 Author: Vipavee Trivittayasil
 Maintainer: Vipavee Trivittayasil <vipavee.tri@gmail.com>
 Description: Read raw EEM data and prepares them for further analysis.
@@ -14,6 +14,6 @@ Suggests: stats, pls, knitr, testthat
 VignetteBuilder: knitr
 License: GPL-3
 NeedsCompilation: no
-Packaged: 2015-08-05 08:32:51 UTC; Cheng
+Packaged: 2015-11-05 00:02:15 UTC; Cheng
 Repository: CRAN
-Date/Publication: 2015-08-05 11:47:37
+Date/Publication: 2015-11-05 08:31:17

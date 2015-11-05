@@ -4,8 +4,8 @@
 \alias{plotScore}
 \title{Plot score for prcomp result}
 \usage{
-plotScore(prcompResult, xPC = 1, yPC = 2, group = NULL, pointsize = 1.5,
-  label = NULL, pos = 4, col = NULL, pch = NULL, title = NULL,
+plotScore(prcompResult, xPC = 1, yPC = 2, group = NULL, cex = 1.5,
+  label = NULL, pos = 4, col = NULL, pch = NULL,
   legendlocation = "bottomright", legendoutside = FALSE,
   rightwhitespace = 0, legendinset = 0, ...)
 }
@@ -20,7 +20,7 @@ plotScore(prcompResult, xPC = 1, yPC = 2, group = NULL, pointsize = 1.5,
 the samples into groups. Able to accept up to two groups which can be stated by
 group = c(group1, group2)}
 
-\item{pointsize}{(optional) size of points on graphs}
+\item{cex}{(optional) size of points on graphs}
 
 \item{label}{(optional) a character vector or expression specifying the text to be written.}
 
@@ -31,8 +31,6 @@ to the left of, above and to the right of the specified coordinates.}
 \item{col}{point color}
 
 \item{pch}{point type}
-
-\item{title}{(optional) plot title}
 
 \item{legendlocation}{(optional)location of legend on graph.
 Look up \code{\link[graphics]{legend}} for more details.}
@@ -46,7 +44,7 @@ Only applicable if legendoutside = TRUE}
 \item{legendinset}{(optional) how much legend box will be pushed to the right.
 Only applicable if legendoutside = TRUE}
 
-\item{...}{additional arguments for \code{\link[graphics]{text}}}
+\item{...}{additional arguments for \code{\link[graphics]{par}}}
 }
 \value{
 A figure is returned on the graphic device
