@@ -4,6 +4,8 @@
 #' 
 #' @param EEM_uf Unfolded EEM matrix where columns are wavelength condition and rows are samples.
 #' It should have corresponding column names (formatted as EX###EM###) and row names. 
+#' @param name optional for data.frame input to specify the sample names
+#' @param ... arguments for other methods
 #' 
 #' @return EEM a list containing EEM/EEM data
 #' 
@@ -16,11 +18,11 @@
 #' @export
 #' 
 #' @importFrom reshape2 acast
-fold <- function(EEM_uf) UseMethod("fold")
+fold <- function(EEM_uf, ...) UseMethod("fold")
 
 #' @rdname fold
 #' @export
-fold.matrix <- function(EEM_uf){
+fold.matrix <- function(EEM_uf, ...){
     
   # information from EEM_uf
   sName <- rownames(EEM_uf)
@@ -43,9 +45,21 @@ fold.matrix <- function(EEM_uf){
   return(EEM)
 }
 
+#' @describeIn fold fold unfolded data.frame
+#' @export
+fold.data.frame <- function(EEM_uf, name = NULL, ...){
+    
+    # turn into matrix
+    EEM_uf <- as.matrix(EEM_uf)
+    if (!is.null(name)) rownames(EEM_uf) <- name
+    
+    # use fold.matrix
+    fold.matrix(EEM_uf)
+}
+
 #' @rdname fold
 #' @export
-fold.numeric <- function(EEM_uf){
+fold.numeric <- function(EEM_uf, ...){
     
     # information from EEM_uf
     var <- names(EEM_uf)
@@ -61,4 +75,16 @@ fold.numeric <- function(EEM_uf){
     # return 
     class(EEM) <- "EEM"
     return(EEM)
+}
+
+#' @export
+fold.tbl_df <- function(EEM_uf, name = NULL, ...){
+    EEM_uf <- as.data.frame(EEM_uf)
+    fold.data.frame(EEM_uf, name = name)
+}
+
+#' @export
+fold.tbl <- function(EEM_uf, name = NULL, ...){
+    EEM_uf <- as.data.frame(EEM_uf)
+    fold.data.frame(EEM_uf, name = name)
 }

@@ -5,7 +5,7 @@
 #' @inheritParams plotScore
 #' @param ncomp maximum number of PC score to plot
 #' @param legendtitle legend title
-#' @param group variable of numeric, character or factor class separating 
+#' @param group a vector of numeric, character or factor class separating 
 #' the samples into groups.
 #' @param ... additional arguments to be passed on to \code{\link[graphics]{pairs}} 
 #' 
@@ -43,7 +43,7 @@ function(prcompResult, ncomp = 4, group, cex = 1.5, col = NULL,
   if (length(group) != dim(score)[1]) {
       stop("The dimension of group and sample do not match. Please check your group variable.")
   }
-  if (!is.factor(group) & is.null(attributes(group))) group <- unclass(as.factor(group))
+  if (!is.factor(group) & is.null(attributes(group)$levels)) group <- unclass(as.factor(group))
   
   # number of groups
   numLevels <- nlevels(group)

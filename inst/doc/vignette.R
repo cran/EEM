@@ -4,15 +4,30 @@ library(EEM)
 opts_chunk$set(fig.width=6.5, fig.height=4)
 
 ## ----readEEM, eval=FALSE-------------------------------------------------
+#  library(EEM) # load library
+#  
+#  # read raw data files from a file
+#  data <- readEEM(file)
+#  data <- readEEM("sample1.txt") # read in a file
+#  data <-readEEM(c("sample1.txt", "sample2.txt")) # read in two files
+#  
 #  # read raw data files from a folder
 #  data <- readEEM(folder)
+#  data <-readEEM("C:\\data") # full path. Note that the slash is doubled.
+#  data <- readEEM("C:/data") # read in all files in data folder. Aside from double slashes,
+#                             # a reverted slash can also be used.
 #  
 #  # read raw data files from the current working folder
-#  data <- readEEM(getwd())
+#  setwd(choose.dir()) # set working folder interactively (only work in windows)
+#  data <- readEEM(getwd()) # read raw data files in current working folder
 
 ## ----loadData------------------------------------------------------------
 # load dataset
 data(applejuice) 
+class(applejuice) # EEM class
+
+# get sample names
+names(applejuice)
 
 # use summary to see information about the dataset.
 summary(applejuice)
@@ -24,21 +39,35 @@ drawEEM(applejuice, n = 1)
 # draw EEM of sample no.1 with different color
 drawEEM(applejuice, n = 1, color.palette = cm.colors) 
 
+## ----drawEEM2------------------------------------------------------------
 # flip the axis
 drawEEM(applejuice, n = 1, flipaxis = TRUE) 
 
-## ----delScattering-------------------------------------------------------
+## ----drawEEMgg-----------------------------------------------------------
+# draw EEM of sample no.1
+drawEEMgg(applejuice, n = 1) 
+ 
+# all functionalities in ggplot can be applied directly 
+library(ggplot2)
+# add grid line to the plot
+drawEEMgg(applejuice, n = 1) + theme(panel.grid = element_line(color = "grey"), 
+                                     panel.grid.major = element_line(colour = "grey"))
+
+## ----delScattering1_1----------------------------------------------------
 # delete scattering regions and assign them as NA
 applejuice_delS <- delScattering(applejuice, rep = NA) 
 drawEEM(applejuice_delS, 1)
 
-## ----delScattering2------------------------------------------------------
+## ----delScattering1_2----------------------------------------------------
 applejuice_delS <- delScattering(applejuice, rep = NA, first = 30, second = 0, third = 0, forth = 0) 
 drawEEM(applejuice_delS, 1)
 
-## ----delScattering3------------------------------------------------------
+## ----delScattering1_3----------------------------------------------------
 applejuice_delS <- delScattering(applejuice, rep = 0, 
                                  first = 30, second = 0, third = 0, forth = 0) 
+
+## ----delScattering2------------------------------------------------------
+drawEEM(delScattering2(applejuice, NA), 1)
 
 ## ----cutEEM--------------------------------------------------------------
 applejuice_delS_cut <- cutEEM(applejuice_delS, cutEX = 350:500, cutEM = 500:700)
@@ -60,6 +89,10 @@ applejuice_delS_uf_norm <- normalize(applejuice_delS_uf)
 
 # the absolute sum of each row should equal to 1
 rowSums(abs(applejuice_delS_uf_norm)) 
+
+## ----export, eval=FALSE--------------------------------------------------
+#  # export as csv file
+#  write.csv(applejuice_delS_uf, "applejuice.csv")
 
 ## ----pca-----------------------------------------------------------------
 # perform PCA
